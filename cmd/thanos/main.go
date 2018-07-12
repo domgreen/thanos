@@ -16,6 +16,8 @@ import (
 
 	gmetrics "github.com/armon/go-metrics"
 
+	"strings"
+
 	gprom "github.com/armon/go-metrics/prometheus"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
@@ -100,6 +102,7 @@ func main() {
 		logger = log.With(logger, "ts", log.DefaultTimestampUTC, "caller", log.DefaultCaller)
 	}
 
+	level.Info(logger).Log("msg", "running command", "cmd", strings.Join(os.Args[1:], " "))
 	metrics := prometheus.NewRegistry()
 	metrics.MustRegister(
 		version.NewCollector("thanos"),
